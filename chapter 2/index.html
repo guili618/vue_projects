@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>Notebook</title>
+  <!-- Icons & Stylesheets -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Include the library in the page -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/marked"></script>
+  <script src="https://unpkg.com/moment"></script>
+
+  <!-- Notebook app -->
+  <div id="notebook">
+
+    <aside class="side-bar">
+      <div class="toobar">
+        <button v-bind:title="addButtonTitle" v-on:click="addNote"><i class="material-icons">add</i>添加笔记</button>
+      </div>
+      <div class="notes">
+        <div class="note" v-for="note of sortedNotes"
+        @click="selectNote(note)"
+        :class="{selected: note === selectedNote}"><i class="icon material-icons" v-if="note.favorite">star</i>{{ note.title }}</div>
+      </div>
+    </aside>
+    <!-- Main pane -->
+    <template v-if="selectedNote">
+        <section class="main" >
+          <div class="toobar">
+            <input v-model="selectedNote.title" placeholder="Note Title" />
+            <button @click="favoriteNote" title="Faveorite note">
+              <i class="material-icons">{{ selectedNote.favotite ? 'star': 'star_border'}}</i>
+            </button>
+            <button @click="removeNote" title="Remove note"><i class="material-icons">delete</i></button>
+          </div>
+
+            <textarea v-model="selectedNote.content"></textarea>
+            <div class="toolbar status-bar">
+              <span class="label">Created</span>
+              <span class="value">{{ selectedNote.created | date}}</span>
+            </div>
+        </section>
+
+        <!-- Preview pane -->
+        <aside class="preview" v-html="notePreview">
+            {{ notePreview }}
+        </aside>
+   </template>
+
+  </div>
+
+  <!-- Some JavaScript -->
+  <script src="my.js"></script>
+</body>
+</html>

@@ -12,7 +12,7 @@ var app = new Vue({
 var app2 = new Vue({
     data () {
         return {
-            messages:'Hello,$ function!'
+            messages2:'Hello,$ function!'
         }
     },
 })
